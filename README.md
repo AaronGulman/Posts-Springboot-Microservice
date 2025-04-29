@@ -17,7 +17,7 @@ Built with **Spring Boot**, this service uses **JPA/Hibernate** for persistence 
 
 ---
 
-## 🛠Tech Stack
+## Tech Stack
 
 - Java 21
 - Spring Boot

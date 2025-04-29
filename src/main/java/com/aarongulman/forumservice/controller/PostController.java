@@ -1,5 +1,6 @@
 package com.aarongulman.forumservice.controller;
 
+import com.aarongulman.forumservice.exceptions.PostNotFoundException;
 import com.aarongulman.forumservice.model.Post;
 import com.aarongulman.forumservice.repository.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,10 +21,36 @@ public class PostController {
         return "Saved" ;
     }
 
+    @PutMapping("/{id}")
+    Post replacePost(@RequestBody Post newPost,@PathVariable Long id){
+        return postRepository.findById(id)
+                .map(post -> {
+                    post.setMessage(newPost.getMessage());
+                    return postRepository.save(post);
+                })
+                .orElseGet(()->{
+                    return postRepository.save(newPost);
+                });
+    }
+
+    @DeleteMapping("/{id}")
+    void deletePost(@PathVariable Long id){
+        postRepository.deleteById(id);
+    }
+
+
     @GetMapping
     public Iterable<Post> getAllPosts(){
         return postRepository.findAll();
     }
+
+    @GetMapping("/{id}")
+    Post one(@PathVariable Long id){
+        return postRepository.findById(id)
+                .orElseThrow(() -> new PostNotFoundException(id));
+    }
+
+
 
 }
 

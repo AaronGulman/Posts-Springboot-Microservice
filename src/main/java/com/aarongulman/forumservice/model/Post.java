@@ -1,5 +1,6 @@
 package com.aarongulman.forumservice.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -15,6 +16,7 @@ public class Post {
     private String mediaUrl;
     private String mediaType;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "MM-dd-yyyy HH:mm:ss")
     LocalDateTime createdAt;
     
     public Post(){
